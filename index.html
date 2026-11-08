@@ -1,0 +1,835 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5ebdd">
+<title>For My Mama 💖</title>
+
+<style>
+:root {
+  --paper:#f5ebdd;
+  --beige:#e8d7bd;
+  --coffee:#a67c52;
+  --brown:#4b3025;
+  --cream:#fffaf1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--brown);
+  font-family:Georgia,serif;
+}
+button,input{font:inherit}
+button{
+  background:var(--coffee);
+  color:white;
+  border:0;
+  border-radius:25px;
+  padding:12px 18px;
+  cursor:pointer;
+}
+button:hover{opacity:.88}
+button:disabled{opacity:.5;cursor:not-allowed}
+header{
+  text-align:center;
+  padding:45px 18px 30px;
+  background:var(--beige);
+}
+header h1{
+  font-size:clamp(35px,8vw,55px);
+  font-style:italic;
+  margin:10px 0;
+}
+header p{color:#795638}
+nav{
+  position:sticky;
+  top:0;
+  z-index:4;
+  background:#fffaf1;
+  padding:12px;
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  border-bottom:1px solid #d9c6ac;
+}
+nav a{
+  color:var(--brown);
+  text-decoration:none;
+  white-space:nowrap;
+  font-size:13px;
+}
+section{
+  max-width:900px;
+  margin:25px auto;
+  padding:25px 18px;
+  background:var(--cream);
+  border:1px solid #dfcbb0;
+  border-radius:14px;
+  box-shadow:0 5px 18px #68452b12;
+}
+h2{
+  text-align:center;
+  font-style:italic;
+  font-size:30px;
+  margin-top:0;
+}
+h3{margin-bottom:7px}
+p{line-height:1.75}
+.center{text-align:center}
+.small{font-size:13px;color:#8a684c}
+.letter{
+  background:#f5ebdd;
+  padding:22px;
+  border-radius:10px;
+  line-height:1.85;
+  white-space:pre-line;
+}
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+.photo-card{
+  background:#fffaf1;
+  padding:9px;
+  border:1px solid #d9c6ac;
+  border-radius:8px;
+  transform:rotate(-1deg);
+  cursor:pointer;
+}
+.photo-card:nth-child(even){transform:rotate(1deg)}
+.photo-card img{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:5px;
+  display:block;
+}
+.photo-caption{
+  text-align:center;
+  padding:9px 2px 3px;
+  font-size:13px;
+}
+.placeholder{
+  aspect-ratio:1;
+  background:var(--beige);
+  display:grid;
+  place-items:center;
+  color:#795638;
+  text-align:center;
+  padding:10px;
+}
+.letter-buttons,.chapter-list{
+  display:grid;
+  gap:10px;
+}
+.letter-buttons button,.chapter-list button{
+  width:100%;
+  text-align:left;
+}
+.result{
+  display:none;
+  background:var(--beige);
+  padding:18px;
+  border-radius:10px;
+  margin-top:15px;
+}
+input[type="text"],input[type="password"]{
+  width:100%;
+  padding:12px;
+  border:1px solid #b99a75;
+  background:white;
+  border-radius:8px;
+  margin:8px 0;
+  color:var(--brown);
+}
+.question{
+  border-bottom:1px solid #e8d7bd;
+  padding:14px 0;
+}
+.option{
+  display:block;
+  padding:8px;
+  margin:5px 0;
+  background:#f5ebdd;
+  border-radius:7px;
+}
+.option input{margin-right:8px}
+#photoBoothGallery{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:15px;
+}
+.booth-photo{
+  background:var(--beige);
+  padding:8px;
+  border-radius:8px;
+}
+.booth-photo img{
+  width:100%;
+  display:block;
+  border-radius:5px;
+}
+.booth-photo button{
+  margin-top:7px;
+  padding:8px;
+  width:100%;
+  font-size:12px;
+}
+.envelope{
+  background:var(--beige);
+  padding:30px 15px;
+  text-align:center;
+  border-radius:12px;
+}
+#finalMessage{
+  display:none;
+  animation:appear 1.2s ease;
+}
+@keyframes appear{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+footer{
+  text-align:center;
+  padding:35px 15px;
+  color:#795638;
+}
+#photoViewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10;
+  background:#24170fee;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+#photoViewer.show{display:flex}
+#photoViewer img{
+  max-width:95%;
+  max-height:80vh;
+  border:7px solid white;
+  border-radius:5px;
+}
+#photoViewer button{
+  position:absolute;
+  top:18px;
+  right:18px;
+}
+@media(min-width:650px){
+  .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+  section{padding:35px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>✦ A LITTLE DIARY OF MEMORIES ✦</div>
+  <h1>For My Mama 💖</h1>
+  <p>To Raksha, my special Mama ♾️</p>
+  <p>December 21 • Your special day</p>
+  <a href="#letter"><button>Open your diary 💌</button></a>
+</header>
+
+<nav>
+  <a href="#letter">Birthday Letter</a>
+  <a href="#scrapbook">Scrapbook</a>
+  <a href="#openwhen">Open When</a>
+  <a href="#secret">Secret</a>
+  <a href="#music">Music</a>
+  <a href="#quiz">Quiz</a>
+  <a href="#booth">Photo Booth</a>
+  <a href="#final">Final Surprise</a>
+</nav>
+
+<!-- BIRTHDAY LETTER -->
+<section id="letter">
+  <h2>My Birthday Letter 💌</h2>
+  <div class="letter">
+<strong>My Mama 💖🫶</strong>
+
+Raksha, you're one of the closest and most trustworthy people in my life. I'm genuinely lucky to have a friend like you. 🥹❤️ You've been with me through my worst situations, supported me when things weren't right, and never made me feel alone. I'll always be grateful for that.
+
+I just want you to know that I'll be there for you the same way you were there for me. No matter what happens, I never want to leave you alone in your difficult times. We might have silly fights or misunderstandings, but that will never change the place you have in my life. 🫂
+
+You're not just a friend, you're my special Mama! 💖♾️
+
+Whatever happens, we've got each other! ❤️‍🩹🫶
+  </div>
+</section>
+
+<!-- 12 PHOTO SCRAPBOOK -->
+<section id="scrapbook">
+  <h2>Our Little Memories ♡</h2>
+  <p class="center small">
+    Twelve moments. Countless memories.
+  </p>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<!-- OPEN WHEN LETTERS -->
+<section id="openwhen">
+  <h2>Open When… ✉️</h2>
+  <p class="center">A little letter for every kind of day.</p>
+
+  <div class="letter-buttons">
+    <button onclick="openLetter(0)">Open when you're sad</button>
+    <button onclick="openLetter(1)">Open when you miss me</button>
+    <button onclick="openLetter(2)">Open when we fight</button>
+    <button onclick="openLetter(3)">Open when you need support</button>
+    <button onclick="openLetter(4)">Open when you need a smile</button>
+  </div>
+
+  <div class="result" id="openWhenResult">
+    <h3 id="openWhenTitle"></h3>
+    <p id="openWhenText"></p>
+    <button onclick="document.getElementById('openWhenResult').style.display='none'">
+      Fold letter
+    </button>
+  </div>
+</section>
+
+<!-- SECRET PASSWORD -->
+<section id="secret">
+  <h2>A Secret Corner 🔐</h2>
+  <p class="center">What nickname do I call you?</p>
+
+  <input id="secretPassword" type="password"
+    placeholder="Enter your answer">
+
+  <button onclick="unlockSecret()">Unlock</button>
+
+  <div class="result" id="secretResult">
+    <h3>You found it, Mama! 💖</h3>
+    <p>
+      You're one of my favourite people.
+      Never forget how much your friendship means to me. 🫶
+    </p>
+  </div>
+  <p class="small">
+    This is a playful website password, not secure access protection.
+  </p>
+</section>
+
+<!-- FOUR MUSIC CHAPTERS -->
+<section id="music">
+  <h2>Four Chapters of Us 🎵</h2>
+  <p class="center">
+    Listen if you want. You can skip any song and continue exploring.
+  </p>
+
+  <div class="chapter-list">
+    <div>
+      <h3>01. The Beginning</h3>
+      <audio id="audio0" controls preload="none">
+        <source src="assets/song-01.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div>
+      <h3>02. Our Silly Moments</h3>
+      <audio id="audio1" controls preload="none">
+        <source src="assets/song-02.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div>
+      <h3>03. Through Everything</h3>
+      <audio id="audio2" controls preload="none">
+        <source src="assets/song-03.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div>
+      <h3>04. Forever Memories</h3>
+      <audio id="audio3" controls preload="none">
+        <source src="assets/song-04.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <p class="small">
+    Add your own audio files to the assets folder.
+    Playback is optional.
+  </p>
+</section>
+
+<!-- FRIENDSHIP QUIZ -->
+<section id="quiz">
+  <h2>How Well Do You Know Us? 🧠</h2>
+  <p class="center">Ten little questions about our friendship.</p>
+
+  <form id="quizForm">
+    <div id="questions"></div>
+    <button type="submit">Submit my answers 💖</button>
+  </form>
+
+  <div class="result" id="quizResult">
+    <h3 id="scoreText"></h3>
+    <p id="quizMessage"></p>
+    <button onclick="downloadReport()">Download quiz report</button>
+    <button onclick="restartQuiz()">Play again</button>
+  </div>
+</section>
+
+<!-- PHOTO BOOTH -->
+<section id="booth">
+  <h2>Our Little Photo Booth 📷</h2>
+  <p class="center">
+    Add a new memory to this diary.
+  </p>
+
+  <input type="file" id="boothInput"
+    accept="image/*" capture="environment">
+
+  <p class="small">
+    Photos saved here stay in this browser on this device.
+    They do not automatically sync to other phones.
+  </p>
+
+  <div id="boothStatus" class="small"></div>
+  <div id="photoBoothGallery"></div>
+</section>
+
+<!-- FINAL SURPRISE -->
+<section id="final">
+  <h2>One Last Secret… ✨</h2>
+  <div class="envelope">
+    <div style="font-size:65px">💌</div>
+    <h3>A letter waiting just for you</h3>
+    <p>There's one final page in your diary, Mama.</p>
+    <button onclick="openFinal()">Open your final surprise</button>
+  </div>
+
+  <div id="finalMessage" class="result">
+    <h2>My Mama 💖🫶</h2>
+    <p class="center">
+      Whatever happens, we've got each other. ❤️‍🩹
+    </p>
+    <p class="center">
+      You're my special Mama! 💖♾️
+    </p>
+    <p class="center">
+      Thank you for being part of my story.
+    </p>
+    <h3 class="center">Forever in our diary. ♡</h3>
+  </div>
+</section>
+
+<footer>
+  Made with memories, laughter and love. 💖
+  <br><br>
+  For Mama, always. ♾️
+</footer>
+
+<div id="photoViewer" onclick="closeViewer()">
+  <button onclick="event.stopPropagation();closeViewer()">
+    Close ✕
+  </button>
+  <img id="largePhoto" alt="Memory">
+</div>
+
+<script>
+/* 12-PHOTO SCRAPBOOK */
+
+const captions = [
+  "A memory worth keeping 📸",
+  "One for the diary ♡",
+  "A little moment, forever",
+  "The laughs we remember",
+  "Our friendship, in a frame",
+  "A day to remember",
+  "Just us being us",
+  "Another beautiful memory",
+  "A moment close to heart",
+  "Forever in our scrapbook 💖",
+  "One more chapter of us 🥹",
+  "Forever in our diary 💖"
+];
+
+const gallery = document.getElementById("gallery");
+
+for(let i=1;i<=12;i++){
+  const number=String(i).padStart(2,"0");
+  const card=document.createElement("div");
+  card.className="photo-card";
+
+  const img=document.createElement("img");
+  img.src=`assets/memory-${number}.jpg`;
+  img.alt=`Memory ${i}`;
+  img.loading="lazy";
+
+  const placeholder=document.createElement("div");
+  placeholder.className="placeholder";
+  placeholder.textContent=`Photo ${i} will appear here ♡`;
+  placeholder.hidden=true;
+
+  img.onerror=()=>{
+    img.hidden=true;
+    placeholder.hidden=false;
+  };
+
+  const caption=document.createElement("div");
+  caption.className="photo-caption";
+  caption.textContent=captions[i-1];
+
+  card.append(img,placeholder,caption);
+
+  card.onclick=()=>{
+    if(img.complete && img.naturalWidth>0){
+      document.getElementById("largePhoto").src=img.src;
+      document.getElementById("photoViewer").classList.add("show");
+    }
+  };
+
+  gallery.appendChild(card);
+}
+
+function closeViewer(){
+  document.getElementById("photoViewer").classList.remove("show");
+  document.getElementById("largePhoto").src="";
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeViewer();
+});
+
+
+/* OPEN WHEN LETTERS */
+
+const letters=[
+  {
+    title:"When you're sad 💗",
+    text:"Mama, difficult days happen. Be kind to yourself and remember that you don't have to handle every problem alone. I'm always wishing the best for you. ❤️"
+  },
+  {
+    title:"When you miss me 🫶",
+    text:"Remember our silly conversations, our laughs and all the little memories we've made. Distance or busy days don't erase a real friendship. 💖"
+  },
+  {
+    title:"When we fight 🥹",
+    text:"We may disagree sometimes, but one misunderstanding cannot erase everything we've shared. Let's always choose understanding over ego. ♡"
+  },
+  {
+    title:"When you need support ❤️",
+    text:"You deserve people who listen, respect you and support you. Never feel that you have to face everything by yourself. I'm cheering for you."
+  },
+  {
+    title:"When you need a smile 😂",
+    text:"Remember all our silly moments and random conversations! Don't forget to laugh, Mama. Life needs a little fun too. 💖"
+  }
+];
+
+function openLetter(index){
+  document.getElementById("openWhenTitle").textContent=letters[index].title;
+  document.getElementById("openWhenText").textContent=letters[index].text;
+  document.getElementById("openWhenResult").style.display="block";
+}
+
+
+/* SECRET PASSWORD */
+
+function unlockSecret(){
+  const value=document.getElementById("secretPassword").value.trim().toLowerCase();
+  const result=document.getElementById("secretResult");
+
+  if(value==="mama"){
+    result.style.display="block";
+  }else{
+    alert("Not quite! Try again 💌");
+  }
+}
+
+
+/* MUSIC: STOP THE OTHER CHAPTERS WHEN ONE STARTS */
+
+const audios=[0,1,2,3].map(i=>document.getElementById("audio"+i));
+
+audios.forEach(audio=>{
+  audio.addEventListener("play",()=>{
+    audios.forEach(other=>{
+      if(other!==audio)other.pause();
+    });
+  });
+});
+
+
+/* FRIENDSHIP QUIZ */
+
+const quiz=[
+  {
+    q:"What nickname do I call you?",
+    options:["Mama","Gay","Idiot","Kullachi"],
+    answer:0
+  },
+  {
+    q:"What is the most special thing about our friendship?",
+    options:["Trust","Support","Memories","Everything"],
+    answer:3
+  },
+  {
+    q:"When I'm feeling low, with whom will I speak?",
+    options:["Raksha (Mama 💖🫶)","My family","Nirmal","Nobody"],
+    answer:0
+  },
+  {
+    q:"What is one thing we never want to lose?",
+    options:["Our friendship","Our memories","Our trust","All of these"],
+    answer:3
+  },
+  {
+    q:"What do I promise you?",
+    options:[
+      "Always support you and be with you",
+      "Never talk to you",
+      "Forget our memories",
+      "Nothing"
+    ],
+    answer:0
+  },
+  {
+    q:"Who is more likely to start a silly fight?",
+    options:["Me","Mama","Both of us","Neither"],
+    answer:1
+  },
+  {
+    q:"Who apologises first after a fight?",
+    options:["Me (Ahamed)","Mama","Both of us","Depends on the situation"],
+    answer:0
+  },
+  {
+    q:"What do we do the most when we're together?",
+    options:["Laughing","Roasting each other","Speak","All of these"],
+    answer:2
+  },
+  {
+    q:"What makes our friendship special?",
+    options:["Trust","Understanding","Being there in hard times","All of these"],
+    answer:0
+  },
+  {
+    q:"Who knows the other's secrets better?",
+    options:["Me","Mama","Both","It's a secret 😂"],
+    answer:2
+  }
+];
+
+const questions=document.getElementById("questions");
+
+quiz.forEach((q,i)=>{
+  const div=document.createElement("div");
+  div.className="question";
+
+  const title=document.createElement("h3");
+  title.textContent=(i+1)+". "+q.q;
+  div.appendChild(title);
+
+  q.options.forEach((option,j)=>{
+    const label=document.createElement("label");
+    label.className="option";
+
+    const radio=document.createElement("input");
+    radio.type="radio";
+    radio.name="q"+i;
+    radio.value=j;
+    radio.required=true;
+
+    label.append(radio,document.createTextNode(option));
+    div.appendChild(label);
+  });
+
+  questions.appendChild(div);
+});
+
+let latestReport="";
+
+document.getElementById("quizForm").addEventListener("submit",function(e){
+  e.preventDefault();
+
+  let score=0;
+  const responses=[];
+
+  quiz.forEach((q,i)=>{
+    const selected=document.querySelector(`input[name="q${i}"]:checked`);
+    const chosen=Number(selected.value);
+    const correct=chosen===q.answer;
+
+    if(correct)score++;
+
+    responses.push({
+      question:q.q,
+      selected:q.options[chosen],
+      correctAnswer:q.options[q.answer],
+      correct:correct
+    });
+  });
+
+  document.getElementById("scoreText").textContent=`Your score: ${score}/10 💖`;
+
+  document.getElementById("quizMessage").textContent=
+    score===10 ? "Perfect! You know our friendship so well! 🥹"
+    : score>=7 ? "Amazing! You know so many things about us! 💗"
+    : "Every answer is another little memory. Try again! 🫶";
+
+  latestReport=
+    "RAKSHA'S FRIENDSHIP QUIZ\n"+
+    "Score: "+score+"/10\n"+
+    "Date: "+new Date().toLocaleString()+"\n\n"+
+    responses.map((r,i)=>
+      `${i+1}. ${r.question}\nYour answer: ${r.selected}\nCorrect answer: ${r.correctAnswer}\nResult: ${r.correct?"Correct":"Incorrect"}`
+    ).join("\n\n");
+
+  document.getElementById("quizResult").style.display="block";
+  document.getElementById("quizResult").scrollIntoView({behavior:"smooth"});
+});
+
+function downloadReport(){
+  if(!latestReport)return;
+
+  const blob=new Blob([latestReport],{type:"text/plain"});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement("a");
+
+  link.href=url;
+  link.download="Mama-Friendship-Quiz-Report.txt";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function restartQuiz(){
+  document.getElementById("quizForm").reset();
+  document.getElementById("quizResult").style.display="none";
+  document.getElementById("quizForm").scrollIntoView({behavior:"smooth"});
+}
+
+
+/* PHOTO BOOTH: INDEXEDDB */
+
+const DB_NAME="MamaPhotoBooth";
+const STORE_NAME="photos";
+let db=null;
+
+function openPhotoDB(){
+  return new Promise((resolve,reject)=>{
+    if(!("indexedDB" in window)){
+      reject(new Error("IndexedDB is unavailable"));
+      return;
+    }
+
+    const request=indexedDB.open(DB_NAME,1);
+
+    request.onupgradeneeded=()=>{
+      const database=request.result;
+      if(!database.objectStoreNames.contains(STORE_NAME)){
+        database.createObjectStore(STORE_NAME,{
+          keyPath:"id",
+          autoIncrement:true
+        });
+      }
+    };
+
+    request.onsuccess=()=>{
+      db=request.result;
+      resolve(db);
+    };
+
+    request.onerror=()=>reject(request.error);
+  });
+}
+
+function photoTransaction(mode,action){
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction(STORE_NAME,mode);
+    const store=transaction.objectStore(STORE_NAME);
+    const request=action(store);
+
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error);
+  });
+}
+
+async function loadBoothPhotos(){
+  if(!db)return;
+
+  try{
+    const photos=await photoTransaction("readonly",store=>store.getAll());
+    const gallery=document.getElementById("photoBoothGallery");
+    gallery.innerHTML="";
+
+    photos.forEach(photo=>{
+      const card=document.createElement("div");
+      card.className="booth-photo";
+
+      const img=document.createElement("img");
+      img.src=URL.createObjectURL(photo.image);
+      img.alt="Saved photo booth memory";
+
+      const button=document.createElement("button");
+      button.textContent="Delete photo";
+      button.onclick=async()=>{
+        await photoTransaction("readwrite",store=>store.delete(photo.id));
+        loadBoothPhotos();
+      };
+
+      card.append(img,button);
+      gallery.appendChild(card);
+    });
+
+    document.getElementById("boothStatus").textContent=
+      photos.length+" saved photo(s) on this device.";
+  }catch(error){
+    document.getElementById("boothStatus").textContent=
+      "Could not load saved photos.";
+  }
+}
+
+document.getElementById("boothInput").addEventListener("change",async function(){
+  const file=this.files[0];
+  if(!file)return;
+
+  if(!file.type.startsWith("image/")){
+    alert("Please choose an image.");
+    this.value="";
+    return;
+  }
+
+  try{
+    await photoTransaction("readwrite",store=>
+      store.add({
+        image:file,
+        savedAt:new Date().toISOString()
+      })
+    );
+
+    await loadBoothPhotos();
+    this.value="";
+  }catch(error){
+    alert("Photo could not be saved. Please try again.");
+  }
+});
+
+openPhotoDB()
+  .then(loadBoothPhotos)
+  .catch(()=>{
+    document.getElementById("boothStatus").textContent=
+      "Photo storage is unavailable in this browser.";
+  });
+
+
+/* FINAL ENVELOPE */
+
+function openFinal(){
+  const message=document.getElementById("finalMessage");
+  message.style.display="block";
+  message.scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
